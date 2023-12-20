@@ -10,13 +10,15 @@ import { parseEther } from 'ethers';
 import { useContractBalance } from './hooks/use-contract-balance';
 import { useReady } from './hooks/use-ready-handler';
 import { useOnAccountsChanged } from './hooks/use-on-accounts-changed';
-import { AppFrame, Button, DataItem, ErrorMessage, FlexColCenter, FlexRowCenter, FundersList, H1, Input, Paragraph } from './styles';
+import { AppFrame, Button, DataItem, ErrorMessage, FlexColCenter, FlexColStart, FlexRowCenter, FundersList, H1, Input, Paragraph } from './styles';
 import Avatar from './assets/avatar.jpg';
 import { useAccountBalance } from './hooks/use-account-balance';
 import { useCheckWindowEthereum } from './hooks/use-check-window-ethereum';
 import { useChainId } from './hooks/use-chain-id';
 import { useOnChainChanged } from './hooks/use-on-chain-changed';
 import { useFunders } from './hooks/use-funders';
+import { ThemeToggler } from './theme-toggler';
+import { Polygon } from './icons/polygon';
 
 function App() {
   const contract = useContract(FUND_ME_ADDRESS, CONTRACT_ABI);
@@ -34,8 +36,10 @@ function App() {
   const ready = useReady();
   const widthdrawable = isContractOwner && parseFloat(contractBalance) > 0;
   const [error, setError] = useState("")
+
   useOnAccountsChanged();
   useOnChainChanged();
+
 
   const onAmountChange = async (e: ChangeEvent<HTMLInputElement>) => {
     setError("");
@@ -152,18 +156,19 @@ function App() {
 
   return (
     <AppFrame>
-      <H1>Fund Me</H1>
+      <H1>Fund Me <Polygon /> </H1>
+      <ThemeToggler />
       <img className="avatar" src={Avatar} alt="Thomas Ender" />
       {!isContractOwner ?
-      <>
-      <Paragraph>Hi, my name is Thomas Ender. I love to learn everything about Blockchain Development,</Paragraph>
-      <Paragraph>from writing Smart Contracts to building the user interface. This website is an example</Paragraph>
-      <Paragraph>of a decentralized application (DApp) that allows you to fund my learning journey.</Paragraph>
-      <Paragraph>The Smart Contract is written in Solidity and the Frontend is build with React and Typescript.</Paragraph>
-      <Paragraph>It is deployed to the Polygon Mainnet, so you can support me by depositing MATIC into this contract.</Paragraph>
-      <Paragraph>You can check out the source code to this project on GitHub if you are curious to learn how it is done!</Paragraph>
-      <Paragraph>Thank you for your support!</Paragraph>
-      </>
+      <FlexColStart>
+        <Paragraph>Hi, my name is Thomas Ender and I love to learn everything about Blockchain Development,</Paragraph>
+        <Paragraph>from writing Smart Contracts to building the user interface. This website is an example</Paragraph>
+        <Paragraph>of a decentralized application (DApp) that allows you to fund my learning journey.</Paragraph>
+        <Paragraph>The Smart Contract is written in Solidity and the Frontend is build with React and Typescript.</Paragraph>
+        <Paragraph>It is deployed to the Polygon Mainnet, so you can support me by depositing MATIC into this contract.</Paragraph>
+        <Paragraph>You can check out the source code to this project on GitHub if you are curious to learn how it is done!</Paragraph>
+        <Paragraph>Thank you for your support!</Paragraph>
+      </FlexColStart>
     : null}
     {isContractOwner ? <Paragraph>Hi Thommy!</Paragraph> : null}
     {widthdrawable ? <Paragraph>Here to withdraw some funds?</Paragraph> : null}
@@ -193,7 +198,7 @@ function App() {
           {maticPrice ? 
             <FlexRowCenter>
               <DataItem>Matic Price: </DataItem>
-              <DataItem>{maticPrice}</DataItem>
+              <DataItem>{maticPrice} </DataItem>
             </FlexRowCenter>
             : null
             }
@@ -209,7 +214,7 @@ function App() {
       <Button type="button" onClick={onWithdraw}>Withdraw</Button> : null}
       {!isContractOwner ?<FlexRowCenter>
           <Input type="number" step="0.000000000000001" onChange={onAmountChange} value={amount} placeholder="Amount in Matic" />
-          <Button type="button" onClick={onFund}>Fund</Button>
+          <Button disabled={!amount} type="button" onClick={onFund}>Fund<Polygon /></Button>
         </FlexRowCenter> : null
       }
       

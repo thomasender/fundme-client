@@ -6,7 +6,8 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        background-color: #f0f0f0;
+        background-color: ${({ theme }) => theme.colors.background};
+        color: ${({ theme }) => theme.colors.text};
         font-family: 'Roboto', sans-serif;
     }
 
@@ -39,10 +40,14 @@ export const AppFrame = styled.div`
 `
 
 export const Button = styled.button`
-    background-color: #000;
+    display: flex;
+    flex-flow: row;
+    gap: 12px;
+    align-items: center;
+    background-color: ${({ theme }) => theme.button.primary.background};
     border: none;
     border-radius: 5px;
-    color: #fff;
+    color: ${({ theme }) => theme.button.primary.color};
     cursor: pointer;
     font-size: 1rem;
     font-weight: 700;
@@ -50,14 +55,23 @@ export const Button = styled.button`
     transition: all 0.2s ease-in-out;
 
     &:hover {
-        background-color: #333;
+        background-color: ${({ theme }) => theme.colors.hover};
+    }
+
+    &:disabled {
+        background-color: ${({ theme }) => theme.colors.disabled};
+        cursor: not-allowed;
+    }
+
+    &:disabled:hover {
+        background-color: ${({ theme }) => theme.button.primary.background};
     }
 `;
 
 export const Input = styled.input`
     width: 100%;    
     max-width: 300px;
-    border: 1px solid #ccc;
+    border: 1px solid ${({ theme }) => theme.colors.hover};
     border-radius: 5px;
     font-size: 1rem;
     padding: 0.5rem 1rem;
@@ -74,6 +88,14 @@ export const FlexRowCenter = styled.div`
 
 export const FlexColCenter = styled.div`
     align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+`;
+
+export const FlexColStart = styled.div`
+    align-items: start;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -107,13 +129,13 @@ export const ErrorMessage = styled.p`
     text-align: start;
     padding: 12px;
     border-radius: 5px;
-    background-color: #181010;
+    background-color: ${({ theme }) => theme.colors.error};
 `
 
 export const FundersList = styled(FlexColCenter)`
     margin-top: 12px;
     padding: 12px;
     border-radius: 5px;
-    background-color: #181010;
-    color: #fff;
+    background-color: transparent;
+    border: 1px solid ${({ theme }) => theme.colors.text};
 `
