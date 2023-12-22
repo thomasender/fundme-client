@@ -5,7 +5,7 @@ import { Sun } from './icons/sun'
 import { Moon } from './icons/moon'
 
 const PositionAbsolute = styled.div`
-    position: absolute;
+    position: fixed;
     top: 10px;
     right: 10px;
 `

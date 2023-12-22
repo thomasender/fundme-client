@@ -6,6 +6,8 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
+        margin: 0;
+        padding: 24px;
         background-color: ${({ theme }) => theme.colors.background};
         color: ${({ theme }) => theme.colors.text};
         font-family: 'Roboto', sans-serif;
@@ -18,6 +20,10 @@ export const GlobalStyle = createGlobalStyle`
         min-height: 100vh;
     }
 
+    a {
+        color: ${({ theme }) => theme.colors.purple};
+    }
+
     .avatar {
         border-radius: 50%;
         width: 100px;
@@ -25,8 +31,14 @@ export const GlobalStyle = createGlobalStyle`
         margin-bottom: 12px;
     }
 
+    .data-input-wrapper {
+        width: 100%;
+        max-width: 500px;
+    }
+
     .contract-data {
         margin-top: 12px;
+        width: 100%;
     }
 `;
 
@@ -44,34 +56,62 @@ export const Button = styled.button`
     flex-flow: row;
     gap: 12px;
     align-items: center;
-    background-color: ${({ theme }) => theme.button.primary.background};
-    border: none;
+    background-color: transparent;
+    border: 2px solid ${({ theme }) => theme.colors.purple};
     border-radius: 5px;
-    color: ${({ theme }) => theme.button.primary.color};
+    color: ${({ theme }) => theme.colors.text};
     cursor: pointer;
     font-size: 1rem;
     font-weight: 700;
     padding: 0.5rem 1rem;
     transition: all 0.2s ease-in-out;
 
-    &:hover {
-        background-color: ${({ theme }) => theme.colors.hover};
+    position: relative; // Add this to position the tooltip
+
+    // A tooltip to show when the button is disabled
+    &::after {
+        content: "Not enough Matic!";
+        display: none;
+        position: absolute;
+        background-color: black;
+        color: white;
+        padding: 5px;
+        border-radius: 5px;
+        bottom: 100%; 
+        left: 50%; 
+        transform: translateX(-50%); 
+        white-space: nowrap;
     }
 
-    &:disabled {
-        background-color: ${({ theme }) => theme.colors.disabled};
-        cursor: not-allowed;
+    // Show the tooltip on hover
+    &:disabled:hover::after {
+        display: block;
+    }
+
+    &:hover {
+        svg {
+            fill: white;
+        }
+    }
+
+    &:hover:not(:disabled) {
+        background-color: ${({ theme }) => theme.colors.purple};
+        color: white;
     }
 
     &:disabled:hover {
-        background-color: ${({ theme }) => theme.button.primary.background};
+        border: 2px solid ${({ theme }) => theme.colors.error};
+        cursor: not-allowed;
+        svg {
+            fill: ${({ theme }) => theme.colors.error};
+        }
     }
 `;
 
 export const Input = styled.input`
     width: 100%;    
     max-width: 300px;
-    border: 1px solid ${({ theme }) => theme.colors.hover};
+    border: 2px solid ${({ theme }) => theme.colors.hover};
     border-radius: 5px;
     font-size: 1rem;
     padding: 0.5rem 1rem;
@@ -137,5 +177,5 @@ export const FundersList = styled(FlexColCenter)`
     padding: 12px;
     border-radius: 5px;
     background-color: transparent;
-    border: 1px solid ${({ theme }) => theme.colors.text};
+    border: 2px solid ${({ theme }) => theme.colors.text};
 `

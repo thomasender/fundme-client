@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { useContract } from "./hooks/use-contract";
 
-import { CONTRACT_ABI, ETHERSCAN_POLYGON_TX_BASE_URL, FUND_ME_ADDRESS, POLYGON_MAINNET_CHAIN_ID, POLYGON_MUMBAI_CHAIN_ID } from './constants';
+import { CONTRACT_ABI, ETHERSCAN_POLYGON_TX_BASE_URL, FUND_ME_ADDRESS, POLYGON_MAINNET_CHAIN_ID } from './constants';
 import { useMinUsd } from './hooks/use-min-usd';
 import { usePrice } from './hooks/use-price';
 import { useMinAmountInMatic } from './hooks/use-min-amount-in-matic';
@@ -19,6 +19,7 @@ import { useOnChainChanged } from './hooks/use-on-chain-changed';
 import { useFunders } from './hooks/use-funders';
 import { ThemeToggler } from './theme-toggler';
 import { Polygon } from './icons/polygon';
+import { ThankYouNotification } from './thank-you-notification';
 
 function App() {
   const contract = useContract(FUND_ME_ADDRESS, CONTRACT_ABI);
@@ -36,6 +37,7 @@ function App() {
   const ready = useReady();
   const widthdrawable = isContractOwner && parseFloat(contractBalance) > 0;
   const [error, setError] = useState("")
+  const [showThankYouNotification, setShowThankYouNotification] = useState(false);
 
   useOnAccountsChanged();
   useOnChainChanged();
@@ -55,7 +57,7 @@ function App() {
         const receit = await tx.wait();
         if(receit && receit.status === 1) {
           setAmount(0);
-          alert("Thank you for your support!")
+          setShowThankYouNotification(true);
           console.log({receit})
         }
       } catch (err) {
@@ -132,17 +134,22 @@ function App() {
   }
 };
   if (chainId !== POLYGON_MAINNET_CHAIN_ID) {
-    return <>
-    <h1>Ooops!</h1>
-    <h2>Looks like you are not connected to the Polygon Mainnet!</h2>
-    <p>Please switch to the Polygon Mainnet to interact with this DApp!</p>
-    <Button onClick={switchToPolygonMainnet}>Switch to Polygon Now!</Button>
-    </>
+    return (
+      <>
+        <ThemeToggler />
+        <h1>Ooops!</h1>
+        <h2>Looks like you are not connected to the Polygon Mainnet!</h2>
+        <Polygon />
+        <p>Please switch to the Polygon Mainnet to interact with this DApp!</p>
+        <Button onClick={switchToPolygonMainnet}>Switch to Polygon Now!</Button>
+      </>
+    )
   }
 
   if (!ready) {
     return (
       <>
+        <ThemeToggler />
         <h1>We are loading the necessary data...</h1>
         <h2>Please make sure to connect your MetaMask in order to interact with this DApp!</h2>
         <Button onClick={onConnect}>Connect</Button>
@@ -156,6 +163,7 @@ function App() {
 
   return (
     <AppFrame>
+      {showThankYouNotification ? <ThankYouNotification closeMe={() => setShowThankYouNotification(false)} /> : null}
       <H1>Fund Me <Polygon /> </H1>
       <ThemeToggler />
       <img className="avatar" src={Avatar} alt="Thomas Ender" />
@@ -172,7 +180,7 @@ function App() {
     : null}
     {isContractOwner ? <Paragraph>Hi Thommy!</Paragraph> : null}
     {widthdrawable ? <Paragraph>Here to withdraw some funds?</Paragraph> : null}
-      <FlexColCenter>
+      <FlexColCenter className="data-input-wrapper">
         <FlexColCenter className="contract-data">
           {accountBalance ? 
           <FlexRowCenter>
@@ -214,7 +222,7 @@ function App() {
       <Button type="button" onClick={onWithdraw}>Withdraw</Button> : null}
       {!isContractOwner ?<FlexRowCenter>
           <Input type="number" step="0.000000000000001" onChange={onAmountChange} value={amount} placeholder="Amount in Matic" />
-          <Button disabled={!amount} type="button" onClick={onFund}>Fund<Polygon /></Button>
+          <Button disabled={!amount || amount < minAmountInMatic } type="button" onClick={onFund}>Fund<Polygon /></Button>
         </FlexRowCenter> : null
       }
       
@@ -234,7 +242,7 @@ function App() {
       {error ? <ErrorMessage>{error}</ErrorMessage> : null}
       {funders.length > 0 ? (
         <FundersList>
-          <Paragraph>Many thanks to all my funders:</Paragraph>
+          <Paragraph>Many thanks to all my funders</Paragraph>
           {funders.map(funder => <Paragraph key={funder}>{sliceAddress(funder)}</Paragraph>)}
         </FundersList>
       ) : null}

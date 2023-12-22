@@ -9,6 +9,7 @@ interface Theme {
     background: string;
     text: string;
     hover: string;
+    purple: string;
   };
   button: {
     primary: {
@@ -27,9 +28,10 @@ export const light: Theme = {
     error: '#ff0000',
     info: '#0000ff',
     contrast: '#ffffff',
-    background: '#f3f3f3',
+    background: '#ffffff',
     text: '#333',
     hover: '#ccc',
+    purple: '#7342DC',
   },
   button: {
     primary: {
@@ -53,6 +55,7 @@ export const dark: Theme = {
     background: '#010101',
     text: '#f3f3f3',
     hover: '#ccc',
+    purple: '#7342DC',
   },
   button: {
     primary: {
