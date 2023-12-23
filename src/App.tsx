@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { useContract } from "./hooks/use-contract";
 
-import { CONTRACT_ABI, ETHERSCAN_POLYGON_TX_BASE_URL, FUND_ME_ADDRESS, POLYGON_MAINNET_CHAIN_ID } from './constants';
+import { CONTRACT_ABI, FUND_ME_ADDRESS, POLYGON_MAINNET_CHAIN_ID } from './constants';
 import { useMinUsd } from './hooks/use-min-usd';
 import { usePrice } from './hooks/use-price';
 import { useMinAmountInMatic } from './hooks/use-min-amount-in-matic';
@@ -20,6 +20,8 @@ import { useFunders } from './hooks/use-funders';
 import { ThemeToggler } from './theme-toggler';
 import { Polygon } from './icons/polygon';
 import { ThankYouNotification } from './thank-you-notification';
+import { TransactionNotification } from './tx-notification';
+import { Footer } from './footer';
 
 function App() {
   const contract = useContract(FUND_ME_ADDRESS, CONTRACT_ABI);
@@ -57,10 +59,12 @@ function App() {
         const receit = await tx.wait();
         if(receit && receit.status === 1) {
           setAmount(0);
+          setTxHash("")
           setShowThankYouNotification(true);
           console.log({receit})
         }
       } catch (err) {
+        setTxHash("")
         setError(err.reason)
       }
     }
@@ -232,20 +236,18 @@ function App() {
           </FlexRowCenter> : null
       }
       {txHash ? 
-      <div>
-        <p>See your transaction on Etherscan:</p>
-        <a href={`${ETHERSCAN_POLYGON_TX_BASE_URL}${txHash}`} target="_blank" rel="noreferrer">{txHash}</a>
-      </div>
+        <TransactionNotification txHash={txHash} />
       : null
       }
       </FlexColCenter>
       {error ? <ErrorMessage>{error}</ErrorMessage> : null}
       {funders.length > 0 ? (
         <FundersList>
-          <Paragraph>Many thanks to all my funders</Paragraph>
+          <Paragraph>Many thanks to all funders</Paragraph>
           {funders.map(funder => <Paragraph key={funder}>{sliceAddress(funder)}</Paragraph>)}
         </FundersList>
       ) : null}
+      <Footer />
     </AppFrame>
   )
 }

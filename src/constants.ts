@@ -13,6 +13,7 @@ export const FUND_ME_ADDRESS = "0x7e140496Abc7227b0ae0081CBe8eeC399B2c86D6";
 export const CONTRACT_ABI = ABI_PROD as ContractABI;
 // Mumbai Testnet TX BASE URL: https://mumbai.polygonscan.com/tx/
 // Mainnet TX BASE URL: https://polygonscan.com/tx/
-export const ETHERSCAN_POLYGON_TX_BASE_URL = "https://mumbai.polygonscan.com/tx/"
+export const ETHERSCAN_POLYGON_TX_BASE_URL = "https://polygonscan.com/tx/"
+export const ETHERSCAN_MUMBAI_POLYGON_TX_BASE_URL = "https://mumbai.polygonscan.com/tx/"
 export const POLYGON_MUMBAI_CHAIN_ID = 8001;
 export const POLYGON_MAINNET_CHAIN_ID = 137;

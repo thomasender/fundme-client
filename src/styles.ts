@@ -7,17 +7,18 @@ export const GlobalStyle = createGlobalStyle`
 
     body {
         margin: 0;
-        padding: 24px;
         background-color: ${({ theme }) => theme.colors.background};
         color: ${({ theme }) => theme.colors.text};
         font-family: 'Roboto', sans-serif;
+        height: 100vh;
+        padding-bottom: 100px;
     }
 
     #root {
         display: flex;
         flex-direction: column;
         align-items: center;
-        min-height: 100vh;
+        height: 100%;
     }
 
     a {
@@ -49,6 +50,7 @@ export const AppFrame = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 100px;
 `
 
 export const Button = styled.button`
@@ -111,7 +113,7 @@ export const Button = styled.button`
 export const Input = styled.input`
     width: 100%;    
     max-width: 300px;
-    border: 2px solid ${({ theme }) => theme.colors.hover};
+    border: 3px solid ${({ theme }) => theme.colors.purple};
     border-radius: 5px;
     font-size: 1rem;
     padding: 0.5rem 1rem;
@@ -178,4 +180,45 @@ export const FundersList = styled(FlexColCenter)`
     border-radius: 5px;
     background-color: transparent;
     border: 2px solid ${({ theme }) => theme.colors.text};
+`
+
+export const NotificationContainer = styled.div`
+    position: fixed;
+    top: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    border: 2px solid ${({ theme }) => theme.colors.purple};
+    background-color: ${({ theme }) => theme.colors.background};
+    box-shadow: 0 0 1rem 0.5rem ${({ theme }) => theme.colors.purple};
+
+    .thank-you-pic {
+        width: 100px;
+        margin-bottom: -32px;
+        margin-top: -20px;
+    }
+`
+
+export const ContainerCloseButton = styled.button`
+    position: absolute;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -12px;
+    right: 0px;
+    padding: 0.5rem;
+    background-color: ${({ theme }) => theme.colors.background};
+    border: none;
+    border-radius: 0.5rem;
+    color: ${({ theme }) => theme.colors.text};
+    cursor: pointer;
+    box-shadow: 0 0 1rem 0.5rem ${({ theme }) => theme.colors.purple};
+
+    @media (min-width: 510px) {
+        right: -16px;
+    }
 `
