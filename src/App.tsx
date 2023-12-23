@@ -65,6 +65,7 @@ function App() {
         }
       } catch (err) {
         setTxHash("")
+        // @ts-expect-error unknown reason
         setError(err.reason)
       }
     }
@@ -100,7 +101,7 @@ function App() {
 
   const switchToPolygonMainnet = async () => {
   try {
-    await window.ethereum.request({
+    await window.ethereum?.request({
       method: 'wallet_switchEthereumChain',
       params: [{
         chainId: '0x89', // Chain ID for Polygon Mainnet
@@ -108,7 +109,7 @@ function App() {
     });
   } catch {
       try {
-        await window.ethereum.request({
+        await window.ethereum?.request({
           "method": "wallet_addEthereumChain",
           "params": [
             {

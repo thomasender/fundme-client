@@ -11,7 +11,8 @@ export const useOnAccountsChanged = () => {
         const handleAccountsChanged = () => {
             window.location.reload();
         }
-        window.ethereum.on("accountsChanged", handleAccountsChanged);
+         // @ts-expect-error unknown property
+        window.ethereum?.on("accountsChanged", handleAccountsChanged);
     }, [hasWindowEthereum])
   return null
 }

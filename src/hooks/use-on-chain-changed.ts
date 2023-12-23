@@ -11,6 +11,7 @@ export const useOnChainChanged = () => {
         const handleChainChanged = () => {
             window.location.reload();
         }
+        // @ts-expect-error unknown property
         window.ethereum?.on("chainChanged", handleChainChanged);
     }, [hasWindowEthereum])
   return null
