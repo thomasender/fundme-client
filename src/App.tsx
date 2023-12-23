@@ -178,7 +178,7 @@ function App() {
         <Paragraph>of a decentralized application (DApp) that allows you to fund my learning journey.</Paragraph>
         <Paragraph>The Smart Contract is written in Solidity and the Frontend is build with React and Typescript.</Paragraph>
         <Paragraph>It is deployed to the Polygon Mainnet, so you can support me by depositing MATIC into this contract.</Paragraph>
-        <Paragraph>You can check out the source code to this project on GitHub if you are curious to learn how it is done!</Paragraph>
+        <Paragraph>You can <a href="https://github.com/thomasender/fundme-client" target="_blank">check out the source code to this project on GitHub</a> if you are curious to learn how it is done!</Paragraph>
         <Paragraph>Thank you for your support!</Paragraph>
       </FlexColStart>
     : null}

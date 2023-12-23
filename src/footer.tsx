@@ -23,7 +23,7 @@ const FooterContainer = styled.div`
 export const Footer = () => {
   return (
     <FooterContainer>
-        <a href='https://github.com/thomasender' target='_blank'>
+        <a href='https://github.com/thomasender/fundme-client' target='_blank'>
             <Github />
         </a>
         <a href='https://www.linkedin.com/in/thomasender/' target='_blank'>
