@@ -10,7 +10,7 @@ import { parseEther } from 'ethers';
 import { useContractBalance } from './hooks/use-contract-balance';
 import { useReady } from './hooks/use-ready-handler';
 import { useOnAccountsChanged } from './hooks/use-on-accounts-changed';
-import { AppFrame, Button, DataItem, ErrorMessage, FlexColCenter, FlexColStart, FlexRowCenter, FundersList, H1, Input, Paragraph } from './styles';
+import { AppFrame, Button, DataItem, DescriptionWrapper, ErrorMessage, FlexColCenter, FlexColStart, FlexRowCenter, FundersList, H1, Input, Paragraph } from './styles';
 import Avatar from './assets/avatar.jpg';
 import { useAccountBalance } from './hooks/use-account-balance';
 import { useCheckWindowEthereum } from './hooks/use-check-window-ethereum';
@@ -22,6 +22,7 @@ import { Polygon } from './icons/polygon';
 import { ThankYouNotification } from './thank-you-notification';
 import { TransactionNotification } from './tx-notification';
 import { Footer } from './footer';
+import { sliceAddress } from './utils';
 
 function App() {
   const contract = useContract(FUND_ME_ADDRESS, CONTRACT_ABI);
@@ -100,14 +101,14 @@ function App() {
   }
 
   const switchToPolygonMainnet = async () => {
-  try {
-    await window.ethereum?.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{
-        chainId: '0x89', // Chain ID for Polygon Mainnet
-      }],
-    });
-  } catch {
+    try {
+        await window.ethereum?.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{
+            chainId: '0x89', // Chain ID for Polygon Mainnet
+          }],
+        });
+    } catch {
       try {
         await window.ethereum?.request({
           "method": "wallet_addEthereumChain",
@@ -136,8 +137,9 @@ function App() {
       } catch {
         console.log('User did not want to switch to Polygon Mainnet!')
       }
-  }
-};
+    }
+  };
+
   if (chainId !== POLYGON_MAINNET_CHAIN_ID) {
     return (
       <>
@@ -162,18 +164,14 @@ function App() {
       )
   }
 
-  const sliceAddress = (address: string) => {
-    return `${address.slice(0, 6)}...${address.slice(-4)}`
-  }
-
   return (
     <AppFrame>
       {showThankYouNotification ? <ThankYouNotification closeMe={() => setShowThankYouNotification(false)} /> : null}
-      <H1>Fund Me <Polygon /> </H1>
+      <H1>Fund Me <Polygon /></H1>
       <ThemeToggler />
       <img className="avatar" src={Avatar} alt="Thomas Ender" />
       {!isContractOwner ?
-      <FlexColStart>
+      <DescriptionWrapper>
         <Paragraph>Hi, my name is Thomas Ender and I love to learn everything about Blockchain Development,</Paragraph>
         <Paragraph>from writing Smart Contracts to building the user interface. This website is an example</Paragraph>
         <Paragraph>of a decentralized application (DApp) that allows you to fund my learning journey.</Paragraph>
@@ -181,7 +179,7 @@ function App() {
         <Paragraph>It is deployed to the Polygon Mainnet, so you can support me by depositing MATIC into this contract.</Paragraph>
         <Paragraph>You can <a href="https://github.com/thomasender/fundme-client" target="_blank">check out the source code to this project on GitHub</a> if you are curious to learn how it is done!</Paragraph>
         <Paragraph>Thank you for your support!</Paragraph>
-      </FlexColStart>
+      </DescriptionWrapper>
     : null}
     {isContractOwner ? <Paragraph>Hi Thommy!</Paragraph> : null}
     {widthdrawable ? <Paragraph>Here to withdraw some funds?</Paragraph> : null}

@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
+import { FOOTER_HEIGHT } from './footer';
 
 export const GlobalStyle = createGlobalStyle`
     * {
@@ -11,7 +12,6 @@ export const GlobalStyle = createGlobalStyle`
         color: ${({ theme }) => theme.colors.text};
         font-family: 'Roboto', sans-serif;
         height: 100vh;
-        padding-bottom: 100px;
     }
 
     #root {
@@ -50,7 +50,7 @@ export const AppFrame = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 100px;
+  padding-bottom: ${FOOTER_HEIGHT}px;
 `
 
 export const Button = styled.button`
@@ -143,6 +143,10 @@ export const FlexColStart = styled.div`
     justify-content: center;
     gap: 12px;
 `;
+
+export const DescriptionWrapper = styled(FlexColStart)`
+    gap: 6px;
+`
 
 export const DataItem = styled.p`
     width: 100%;
