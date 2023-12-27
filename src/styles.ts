@@ -169,7 +169,7 @@ export const Paragraph = styled.p`
 `
 
 export const ErrorMessage = styled.p`
-    color: red;
+    color: white;
     font-size: 1rem;
     margin: 0;
     text-align: start;
