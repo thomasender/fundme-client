@@ -76,11 +76,19 @@ function App() {
     if(!contract || !isContractOwner) {
       return;
     }
-    const tx = await contract.withdraw();
-    setTxHash(tx.hash);
-    const receit = await tx.wait();
-    if(receit) {
-      console.log({receit})
+    setError("");
+    try {
+      const tx = await contract.withdraw();
+      setTxHash(tx.hash);
+      const receit = await tx.wait();
+      if(receit && receit.status === 1) {
+        setTxHash("")
+        console.log({receit})
+      }
+    } catch (err) {
+      setTxHash("")
+      // @ts-expect-error unknown reason
+      setError(err.reason)
     }
   }
 
