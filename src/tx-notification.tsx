@@ -43,7 +43,7 @@ export const TransactionNotification = ({txHash}: {txHash: string}) => {
           <LoadingSpinner />
           <Paragraph>It may take a few minutes to complete.</Paragraph>
           <Paragraph>Do not close this window.</Paragraph>
-          <Paragraph>See your transaction on Etherscan:</Paragraph>
+          <Paragraph>See your transaction on Polyscan:</Paragraph>
           <a href={`${ETHERSCAN_POLYGON_TX_BASE_URL}${txHash}`} target="_blank" rel="noreferrer">{txHash}</a>
       </NotificationContainer>
     </BlurBackground>
