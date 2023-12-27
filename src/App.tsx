@@ -10,7 +10,7 @@ import { parseEther } from 'ethers';
 import { useContractBalance } from './hooks/use-contract-balance';
 import { useReady } from './hooks/use-ready-handler';
 import { useOnAccountsChanged } from './hooks/use-on-accounts-changed';
-import { AppFrame, Button, DataItem, DescriptionWrapper, ErrorMessage, FlexColCenter, FlexColStart, FlexRowCenter, FundersList, H1, Input, Paragraph } from './styles';
+import { AppFrame, Button, DataItem, DescriptionWrapper, ErrorMessage, FlexColCenter, FlexRowCenter, FundersList, H1, Input, Paragraph } from './styles';
 import Avatar from './assets/avatar.jpg';
 import { useAccountBalance } from './hooks/use-account-balance';
 import { useCheckWindowEthereum } from './hooks/use-check-window-ethereum';
